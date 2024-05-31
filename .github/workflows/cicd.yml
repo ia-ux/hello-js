@@ -1,11 +1,10 @@
 on: push
-runs-on: self-hosted
 jobs:
   lint:
     uses: internetarchive/dyno/.github/workflows/lint.yml@main
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container:
       # https://github.com/internetarchive/dyno
       image: ghcr.io/internetarchive/dyno:main
@@ -14,13 +13,14 @@ jobs:
     - run: /app/test/test.sh
 
   cicd:
+    runs-on: self-hosted
     uses: internetarchive/cicd/.github/workflows/cicd.yml@main
     secrets:
       NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
     needs: [lint, test]
 
   image-test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [cicd]
     container:
       # test using the just built-and-pushed docker image from the [cicd] job above
