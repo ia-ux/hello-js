@@ -13,7 +13,7 @@ jobs:
     - run: /app/test/test.sh
 
   cicd:
-    runs-on: self-hosted
+    # runs-on: self-hosted # xxx
     uses: internetarchive/cicd/.github/workflows/cicd.yml@main
     secrets:
       NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
